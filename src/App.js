@@ -9,7 +9,7 @@ function App() {
 
 
   return (
-  <ExUseState1 />
+  <Ex2UseEffect />
   );
 }
 
