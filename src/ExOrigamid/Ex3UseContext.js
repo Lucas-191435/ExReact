@@ -11,6 +11,11 @@ const GlobalStorage = ({children})=>{
     fetch(url).then((response)=> response.json()).then((json)=> setDados(json));
   },[]) 
 
+
+  function limparDados(){
+    setDados(null);
+  }
+
   return(
     <GlobalContext.Provider value={dados}>
       {children}

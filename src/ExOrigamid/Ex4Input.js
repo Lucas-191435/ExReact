@@ -51,46 +51,46 @@ const formFields = [
 
 const Ex4Input = ()=>{
 
-  const [form,setForm] = React.useState(
+  const [form, setForm] = React.useState(
     formFields.reduce((acc, field)=>{
-      return {...acc, [field.id]: ''}
+      return ({...acc, [field.id]: ''});
     }, {})
-  );
+    )
 
 
-  const [response, setResponse] = React.useState(null);
+    const [resposta, setResposta] = React.useState(null);
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    fetch('https://ranekapi.origamid.dev/json/api/usuario', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(form),
-    }).then((response) => {
-      setResponse(response);
-    });
-  }
+    function handleSubmit(event){
+      event.preventDefault();
+      fetch('https://ranekapi.origamid.dev/json/api/usuario', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          },
+          // form é o objeto com os dados do formulário
+          body: JSON.stringify(form),
+        }).then((response)=> setResposta(response));
+    }
 
 
-  function handleChange({target}){
-    const {id, value} = target;
-    setForm({...form, [id]: value});
-    console.log(value)
-  }
-
+    function handleChange({target}){
+      const {id, value} = target;
+      setForm({...form, [id]: value});
+      console.log(form)
+    }
+    
   return(
     <form onSubmit={handleSubmit}>
       {formFields.map(({id, label, type})=>(
         <div key={id}>
-          <label htmlFor={id} >{label}</label>
-          <input type={type} id={id} value={form.id} onChange={handleChange} />
+          <label htmlFor={id}>{label}</label>
+          <input type={type} id={id} value={form[id]} onChange={handleChange} />
         </div>
       ))}
 
       <button>Enviar</button>
-      {response && response.ok && <p>Usuário Criado</p>}
+      
+      {resposta ? <p>usuario criado</p> : null}
     </form>
   )
 }
