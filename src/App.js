@@ -9,7 +9,7 @@ function App() {
 
 
   return (
-  <Ex2UseEffect />
+  <Ex3UseContext />
   );
 }
 

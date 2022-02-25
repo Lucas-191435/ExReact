@@ -2,41 +2,33 @@ import React, { useContext } from 'react';
 
 const GlobalContext = React.createContext();
 
-
 const GlobalStorage = ({children})=>{
-  const [produtos, setProdutos] = React.useState(null);
+  const [dados, setDados] = React.useState(null);
+
+  const url = 'https://ranekapi.origamid.dev/json/api/produto'
 
   React.useEffect(()=>{
-    fetch("https://ranekapi.origamid.dev/json/api/produto/")
-    .then((response)=>response.json()).then((json)=>setProdutos(json));
-  },[])
-
-  function limparProdutos(){
-    setProdutos(null);
-  }
-
-  if(produtos === null) return null
+    fetch(url).then((response)=> response.json()).then((json)=> setDados(json));
+  },[]) 
 
   return(
-    <GlobalContext.Provider value={produtos}>
-      {children};
+    <GlobalContext.Provider value={dados}>
+      {children}
     </GlobalContext.Provider>
   )
 }
 
+
 const Produto = ()=>{
-  const global = useContext(GlobalContext);
-
-  console.log(global);
-
-  return(
-    <>
-      Lista de produtos:
-
+  const global = React.useContext(GlobalContext);
+  
+  if(global === null) return null;
+  return (
+    <div>
       {global.map((produto)=>(
-        <h3 key={produto.id}>{produto.nome}</h3>
-      ))} 
-    </>
+        <h1 key={produto.id}>{produto.nome}</h1>
+      ))}
+    </div>
   )
 }
 
